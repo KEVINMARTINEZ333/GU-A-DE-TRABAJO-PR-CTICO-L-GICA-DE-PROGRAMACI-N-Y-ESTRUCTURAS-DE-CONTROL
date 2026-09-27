@@ -1,0 +1,98 @@
+Algoritmo SistemaAgroInsumos
+	
+    Definir opcion, cantidad, inventario Como Entero
+    Definir subtotal, descuento, total_pagar, recaudo_total, recaudo_compras Como Real
+	
+    inventario <- 0
+    recaudo_total <- 0
+	
+    Escribir "======================================"
+    Escribir "   AGROINSUMOS DEL VALLE"
+    Escribir "======================================"
+    Escribir "Ingrese la cantidad inicial de sacos en bodega:"
+    Leer inventario
+	
+    Mientras inventario <= 0 Hacer
+        Escribir "CANTIDAD INVALIDA. Debe ser un entero mayor a cero:"
+        Leer inventario
+    FinMientras
+	
+    Repetir
+		
+        Limpiar Pantalla
+		
+        Escribir "======================================"
+        Escribir "   AGROINSUMOS DEL VALLE"
+        Escribir "1. Realizar venta"
+        Escribir "2. Consultar stock"
+        Escribir "3. Cierre de caja"
+        Escribir "======================================"
+        Escribir "Seleccione una opcion:"
+        Leer opcion
+		
+        Segun opcion Hacer
+			
+            1:
+				Limpiar Pantalla
+                Escribir "--- REGISTRO DE VENTA ---"
+                Escribir "Sacos disponibles en bodega: ", inventario
+                Escribir "Cantidad de sacos que desea comprar:"
+                Leer cantidad
+				
+                Mientras cantidad <= 0 Hacer
+                    Escribir "CANTIDAD INVALIDA. Debe ser un entero mayor a cero"
+                    Leer cantidad
+                FinMientras
+				
+                Si cantidad > inventario Entonces
+                    Escribir "ALERTA: stock insuficiente."
+                    Escribir "Transaccion cancelada. Regresando al menu..."
+                SiNo
+                    subtotal <- cantidad * 85000
+					
+                    Si cantidad >= 10 Entonces
+                        descuento <- subtotal * 0.08
+                    SiNo
+                        descuento <- 0
+                    FinSi
+					
+                    total_pagar <- subtotal - descuento
+					
+                    inventario <- inventario - cantidad
+                    recaudo_total <- recaudo_total + total_pagar
+					recaudo_compras <- recaudo_compras + cantidad
+					
+                    Escribir "Subtotal: $", subtotal
+                    Escribir "Descuento: $", descuento
+                    Escribir "Total a pagar: $", total_pagar
+                    Escribir "Venta registrada exitosamente."
+                FinSi
+				
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            2:
+				Limpiar Pantalla
+                Escribir "--- CONSULTA DE STOCK ---"
+                Escribir "Sacos restantes en bodega: ", inventario
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            3:
+				Limpiar Pantalla
+                Escribir "--- CIERRE DE CAJA ---"
+				Escribir "compras realizadas: ", recaudo_compras
+                Escribir "Total recaudado en la jornada: $", recaudo_total
+                Escribir "Sacos restantes en bodega: ", inventario
+                Escribir "Cerrando el sistema. Hasta luego!"
+				
+            De Otro Modo:
+                Escribir "Opcion no valida. Intente de nuevo."
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+        FinSegun
+		
+    Hasta Que opcion = 3
+	
+FinAlgoritmo
