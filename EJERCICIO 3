@@ -1,0 +1,104 @@
+Algoritmo SistemaNotasDocente
+	
+    Definir opcion Como Entero
+    Definir n1, n2, n3, notaFinal, promedioGrupo, sumaNotas Como Real
+    Definir aprobados, recuperacion, reprobados, totalEstudiantes Como Entero
+    Definir estado Como Cadena
+	
+    totalEstudiantes <- 0
+    aprobados <- 0
+    recuperacion <- 0
+    reprobados <- 0
+    sumaNotas <- 0
+	
+    Repetir
+		
+        Limpiar Pantalla
+		
+        Escribir "======================================"
+        Escribir "            MENU PRINCIPAL"
+        Escribir "1. Registrar nuevo estudiante"
+        Escribir "2. Ver estadisticas del grupo"
+        Escribir "3. Salir"
+        Escribir "======================================"
+        Escribir "Seleccione una opcion:"
+        Leer opcion
+		
+        Segun opcion Hacer
+			
+            1:
+                Escribir "Ingrese la nota del primer parcial (0.0 a 5.0):"
+                Leer n1
+                Mientras (n1 < 0.0 O n1 > 5.0) Hacer
+                    Escribir "NOTA INVALIDA. Debe estar entre 0.0 y 5.0. Intente de nuevo:"
+                    Leer n1
+                FinMientras
+				
+                Escribir "Ingrese la nota del segundo parcial (0.0 a 5.0):"
+                Leer n2
+                Mientras (n2 < 0.0 O n2 > 5.0) Hacer
+                    Escribir "NOTA INVALIDA. Debe estar entre 0.0 y 5.0. Intente de nuevo:"
+                    Leer n2
+                FinMientras
+				
+                Escribir "Ingrese la nota del tercer parcial (0.0 a 5.0):"
+                Leer n3
+                Mientras (n3 < 0.0 O n3 > 5.0) Hacer
+                    Escribir "NOTA INVALIDA. Debe estar entre 0.0 y 5.0. Intente de nuevo:"
+                    Leer n3
+                FinMientras
+				
+                notaFinal <- (n1 * 0.3) + (n2 * 0.3) + (n3 * 0.4)
+				
+                Si notaFinal >= 3.0 Entonces
+                    estado <- "Aprobado"
+                    aprobados <- aprobados + 1
+                SiNo
+                    Si notaFinal >= 2.0 Entonces
+                        estado <- "En Recuperacion"
+                        recuperacion <- recuperacion + 1
+                    SiNo
+                        estado <- "Reprobado"
+                        reprobados <- reprobados + 1
+                    FinSi
+                FinSi
+				
+                totalEstudiantes <- totalEstudiantes + 1
+                sumaNotas <- sumaNotas + notaFinal
+				
+                Escribir "Estudiante registrado."
+                Escribir "Nota final: ", notaFinal
+                Escribir "Estado: ", estado
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            2:
+                Si totalEstudiantes > 0 Entonces
+                    promedioGrupo <- sumaNotas / totalEstudiantes
+                    Limpiar Pantalla
+                    Escribir "======== ESTADISTICAS DEL GRUPO ========"
+                    Escribir "Total de alumnos procesados: ", totalEstudiantes
+                    Escribir "Aprobados: ", aprobados
+                    Escribir "En recuperacion: ", recuperacion
+                    Escribir "Reprobados: ", reprobados
+                    Escribir "Promedio general del grupo: ", promedioGrupo
+                    Escribir "========================================"
+                SiNo
+                    Escribir "Aun no hay estudiantes registrados."
+                FinSi
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            3:
+                Escribir "Cerrando la aplicacion. Hasta luego!"
+				
+            De Otro Modo:
+                Escribir "Opcion no valida. Intente de nuevo."
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+        FinSegun
+		
+    Hasta Que opcion = 3
+	
+FinAlgoritmo 
