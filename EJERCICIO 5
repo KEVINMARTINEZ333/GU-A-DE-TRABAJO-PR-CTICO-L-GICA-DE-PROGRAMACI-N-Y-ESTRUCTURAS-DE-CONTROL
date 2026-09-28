@@ -1,0 +1,126 @@
+Algoritmo SistemaCinemaMultiplex
+	
+    Definir opcion, categoria, cantidad, capacidad_inicial, disponible Como Entero
+    Definir precio_unitario, subtotal, descuento, total_pagar, recaudo_total Como Real
+    Definir entradas_general, entradas_estudiante, N_descuento Como Entero
+	
+    capacidad_inicial <- 0
+    disponible <- 0
+    recaudo_total <- 0
+    entradas_general <- 0
+    entradas_estudiante <- 0
+    transacciones_descuento <- 0
+	
+    Escribir "======================================"
+    Escribir "   CINEMA MULTIPLEX"
+    Escribir "======================================"
+    Escribir "Capacidad disponible inicial (1 a 80 asientos):"
+    Leer capacidad_inicial
+	
+    Mientras (capacidad_inicial < 1 O capacidad_inicial > 80) Hacer
+        Escribir "CAPACIDAD INVALIDA. Debe estar entre 1 y 80:"
+        Leer capacidad_inicial
+    FinMientras
+	
+    disponible <- capacidad_inicial
+	
+    Repetir
+		
+        Limpiar Pantalla
+		
+        Escribir "======================================"
+        Escribir "   CINEMA MULTIPLEX"
+        Escribir "1. Procesar venta de entradas"
+        Escribir "2. Consultar estado de la sala"
+        Escribir "3. Cierre de caja"
+        Escribir "======================================"
+        Escribir "Seleccione una opcion:"
+        Leer opcion
+		
+        Segun opcion Hacer
+			
+            1:
+				Limpiar Pantalla
+                Escribir "--- VENTA DE ENTRADAS ---"
+                Escribir "Categoria del asistente (1: General | 2: Estudiante):"
+                Leer categoria
+				
+                Mientras (categoria < 1 O categoria > 2) Hacer
+                    Escribir "CATEGORIA INVALIDA. Ingrese 1 o 2:"
+                    Leer categoria
+                FinMientras
+				
+                Escribir "Cantidad de boletos:"
+                Leer cantidad
+				
+                Mientras cantidad <= 0 Hacer
+                    Escribir "CANTIDAD INVALIDA. Debe ser un entero positivo:"
+                    Leer cantidad
+                FinMientras
+				
+                Si cantidad > disponible Entonces
+                    Escribir "ALERTA: aforo agotado. Solo quedan ", disponible, " asientos."
+                    Escribir "Transaccion cancelada. Regresando al menu..."
+                SiNo
+                    Si categoria = 1 Entonces
+                        precio_unitario <- 12000
+                    SiNo
+                        precio_unitario <- 8000
+                    FinSi
+					
+                    subtotal <- cantidad * precio_unitario
+					
+                    Si cantidad >= 4 Entonces
+                        descuento <- subtotal * 0.10
+                        N_descuento <- N_descuento + 1
+                    SiNo
+                        descuento <- 0
+                    FinSi
+					
+                    total_pagar <- subtotal - descuento
+					
+                    disponible <- disponible - cantidad
+                    recaudo_total <- recaudo_total + total_pagar
+					
+                    Si categoria = 1 Entonces
+                        entradas_general <- entradas_general + cantidad
+                    SiNo
+                        entradas_estudiante <- entradas_estudiante + cantidad
+                    FinSi
+					
+                    Escribir "Subtotal: $", subtotal
+                    Escribir "Descuento: $", descuento
+                    Escribir "Total a pagar: $", total_pagar
+                    Escribir "Venta registrada exitosamente."
+                FinSi
+				
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            2:
+				Limpiar Pantalla
+                Escribir "--- ESTADO DE LA SALA ---"
+                Escribir "Sillas ocupadas: ", capacidad_inicial - disponible
+                Escribir "Asientos disponibles: ", disponible
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            3:
+				Limpiar Pantalla
+                Escribir "--- CIERRE DE CAJA ---"
+                Escribir "Dinero total recaudado: $", recaudo_total
+                Escribir "Entradas vendidas a General: ", entradas_general
+                Escribir "Entradas vendidas a Estudiantes: ", entradas_estudiante
+                Escribir "Numero de descuentos realizados: ", N_descuento
+                Escribir "Cerrando el sistema. Hasta luego!"
+				
+            De Otro Modo:
+                Escribir "Opcion no valida. Intente de nuevo."
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+        FinSegun
+		
+    Hasta Que opcion = 3
+	
+FinAlgoritmo
