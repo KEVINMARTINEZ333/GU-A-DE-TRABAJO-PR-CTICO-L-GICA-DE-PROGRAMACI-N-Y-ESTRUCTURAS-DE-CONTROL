@@ -1,0 +1,105 @@
+Algoritmo SistemaCentroAcopio
+	
+    Definir opcion, tipo Como Entero
+    Definir peso, tarifa, valor_total, bono, retencion, total_pagar Como Real
+    Definir total_kg, total_dinero, max_peso Como Real
+	
+    total_kg <- 0
+    total_dinero <- 0
+    max_peso <- 0
+	
+    Repetir
+		
+        Limpiar Pantalla
+		
+        Escribir "======================================"
+        Escribir "   CENTRO DE ACOPIO"
+        Escribir "1. Registrar lote de fruta"
+        Escribir "2. Ver resumen del centro"
+        Escribir "3. Salir"
+        Escribir "======================================"
+        Escribir "Seleccione una opcion:"
+        Leer opcion
+		
+        Segun opcion Hacer
+			
+            1:
+                Escribir "--- REGISTRO DE LOTE ---"
+                Escribir "Categoria de calidad (1: Tipo A | 2: Tipo B):"
+                Leer tipo
+				
+                Mientras (tipo < 1 O tipo >  2) Hacer
+                    Escribir "CATEGORIA INVALIDA. Ingrese 1 o 2:"
+                    Leer tipo
+                FinMientras
+				
+                Escribir "Peso del lote en kilogramos:"
+                Leer peso
+				
+                Mientras peso <= 0 Hacer
+                    Escribir "PESO INVALIDO. Debe ser un numero real positivo:"
+                    Leer peso
+                FinMientras
+				
+                Si tipo = 1 Entonces
+                    tarifa <- 3500
+                SiNo
+                    tarifa <- 2200
+                FinSi
+				
+                valor_total <- peso * tarifa
+				
+                Si tipo = 1 Y peso > 500 Entonces
+                    bono <- valor_total * 0.05
+                    retencion <- 0
+                SiNo
+                    Si tipo = 2 Y peso < 100 Entonces
+                        bono <- 0
+                        retencion <- valor_total * 0.03
+                    SiNo
+                        bono <- 0
+                        retencion <- 0
+                    FinSi
+                FinSi
+				
+                total_pagar <- valor_total + bono - retencion
+				
+                total_kg <- total_kg + peso
+                total_dinero <- total_dinero + total_pagar
+				
+                Si peso > max_peso Entonces
+                    max_peso <- peso
+                FinSi
+				
+                Escribir "Valor de la carga: $", valor_total
+                Escribir "Bono por volumen: $", bono
+                Escribir "Retencion: $", retencion
+                Escribir "Total a pagar al agricultor: $", total_pagar
+                Escribir "Lote registrado exitosamente."
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            2:
+                Si total_kg > 0 Entonces
+                    Escribir "--- RESUMEN DEL CENTRO ---"
+                    Escribir "Total de kilogramos recibidos: ", total_kg
+                    Escribir "Dinero total desembolsado: $", total_dinero
+                    Escribir "Lote mas pesado de la jornada: ", max_peso, " kg"
+                SiNo
+                    Escribir "Aun no se han registrado lotes."
+                FinSi
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            3:
+                Escribir "Cerrando el sistema.. chaito :p"
+				
+            De Otro Modo:
+                Escribir "Opcion no valida. Intente de nuevo."
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+        FinSegun
+		
+    Hasta Que opcion = 3
+FinAlgoritmo
