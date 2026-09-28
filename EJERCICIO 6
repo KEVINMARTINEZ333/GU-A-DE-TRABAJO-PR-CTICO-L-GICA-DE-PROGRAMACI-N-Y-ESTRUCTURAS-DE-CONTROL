@@ -1,0 +1,117 @@
+Algoritmo SistemaElectroValle
+	
+    Definir opcion, categoria Como Entero
+    Definir consumo, tarifa, costo_total, descuento, recargo, total_pagar Como Real
+    Definir total_kwh, total_dinero, max_consumo Como Real
+    Definir cant_residencial, cant_comercial Como Entero
+	
+    total_kwh <- 0
+    total_dinero <- 0
+    max_consumo <- 0
+    cant_residencial <- 0
+    cant_comercial <- 0
+	
+    Repetir
+		
+        Limpiar Pantalla
+		
+        Escribir "======================================"
+        Escribir "   ELECTROVALLE"
+        Escribir "1. Registrar lectura de medidor"
+        Escribir "2. Generar informe de la jornada"
+        Escribir "3. Salir"
+        Escribir "======================================"
+        Escribir "Seleccione una opcion:"
+        Leer opcion
+		
+        Segun opcion Hacer
+			
+            1:
+                Escribir "--- REGISTRO DE LECTURA ---"
+                Escribir "Categoria del predio (1: Residencial | 2: Comercial):"
+                Leer categoria
+				
+                Mientras (categoria < 1 O categoria > 2) Hacer
+                    Escribir "CATEGORIA INVALIDA. Ingrese 1 o 2:"
+                    Leer categoria
+                FinMientras
+				
+                Escribir "Consumo en kWh del mes:"
+                Leer consumo
+				
+                Mientras consumo < 0 Hacer
+                    Escribir "CONSUMO INVALIDO. Debe ser mayor o igual a cero:"
+                    Leer consumo
+                FinMientras
+				
+                Si categoria = 1 Entonces
+                    tarifa <- 600
+                SiNo
+                    tarifa <- 900
+                FinSi
+				
+                costo_total <- consumo * tarifa
+				
+                Si categoria = 1 Y consumo <= 150 Entonces
+                    descuento <- costo_total * 0.12
+                    recargo <- 0
+                SiNo
+                    Si categoria = 2 Y consumo > 500 Entonces
+                        descuento <- 0
+                        recargo <- costo_total * 0.15
+                    SiNo
+                        descuento <- 0
+                        recargo <- 0
+                    FinSi
+                FinSi
+				
+                total_pagar <- costo_total - descuento + recargo
+				
+                total_kwh <- total_kwh + consumo
+                total_dinero <- total_dinero + total_pagar
+				
+                Si categoria = 1 Entonces
+                    cant_residencial <- cant_residencial + 1
+                SiNo
+                    cant_comercial <- cant_comercial + 1
+                FinSi
+				
+                Si consumo > max_consumo Entonces
+                    max_consumo <- consumo
+                FinSi
+				
+                Escribir "Costo del servicio: $", costo_total
+                Escribir "Subsidio aplicado: $", descuento
+                Escribir "Recargo por sobreconsumo: $", recargo
+                Escribir "Total a pagar: $", total_pagar
+                Escribir "Lectura registrada exitosamente."
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            2:
+                Si total_kwh > 0 Entonces
+                    Escribir "--- INFORME DE LA JORNADA ---"
+                    Escribir "Total de kWh consumidos: ", total_kwh
+                    Escribir "Dinero total facturado: $", total_dinero
+                    Escribir "Predios residenciales atendidos: ", cant_residencial
+                    Escribir "Predios comerciales atendidos: ", cant_comercial
+                    Escribir "Consumo maximo en una lectura: ", max_consumo, " kWh"
+                SiNo
+                    Escribir "Aun no se han registrado lecturas."
+                FinSi
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+            3:
+                Escribir "Cerrando el sistema..  Nos vemos en futuros ejercicios :)"
+				
+            De Otro Modo:
+                Escribir "Opcion no valida. Intente de nuevo."
+                Escribir "Presione una tecla para continuar..."
+                Esperar Tecla
+				
+        FinSegun
+		
+    Hasta Que opcion = 3
+	
+FinAlgoritmo
